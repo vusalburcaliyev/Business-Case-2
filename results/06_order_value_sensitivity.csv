@@ -1,0 +1,3 @@
+period,threshold_cents,sold_orders,sales_cents,above_threshold_orders,sales_without_high_value_cents
+2018-Q1,98700,20627,270443838,162,247627645
+2018-Q2,98700,19646,280715664,231,243820142

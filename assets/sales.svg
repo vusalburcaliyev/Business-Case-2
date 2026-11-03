@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 338" role="img" font-family="system-ui, sans-serif">
+<title>Sales &amp; customers</title>
+<rect x="1" y="1" width="918" height="336" rx="16" fill="#f4f8f8" stroke="#d6e1e5"/>
+<path d="M17 1 H903 Q919 1 919 17 V90 H1 V17 Q1 1 17 1" fill="#102c3b"/>
+<text x="24" y="29" fill="#9cddd0" font-size="12" font-weight="750">RETAIL QUARTER REVIEW   /   Q2 2018</text>
+<text x="24" y="60" fill="#ffffff" font-size="27" font-weight="750">Sales &amp; customers</text>
+<text x="25" y="79" fill="#d6e8eb" font-size="12" font-weight="500">Delivered orders grouped by purchase date</text>
+<rect x="22" y="105" width="285" height="60" rx="9" fill="#ffffff" stroke="#d6e1e5"/>
+<text x="33" y="127" fill="#4c6573" font-size="12" font-weight="650">Merchandise sales</text>
+<text x="33" y="151" fill="#183346" font-size="22" font-weight="750">R$ 2,807,157</text>
+<rect x="317" y="105" width="285" height="60" rx="9" fill="#ffffff" stroke="#d6e1e5"/>
+<text x="328" y="127" fill="#4c6573" font-size="12" font-weight="650">Delivered orders with items</text>
+<text x="328" y="151" fill="#183346" font-size="22" font-weight="750">19,646</text>
+<rect x="612" y="105" width="285" height="60" rx="9" fill="#ffffff" stroke="#d6e1e5"/>
+<text x="623" y="127" fill="#4c6573" font-size="12" font-weight="650">Average order value</text>
+<text x="623" y="151" fill="#183346" font-size="22" font-weight="750">R$ 142.89</text>
+<text x="24" y="192" fill="#183346" font-size="15" font-weight="750">Delivered merchandise sales by month</text>
+<text x="24" y="224" fill="#183346" font-size="13" font-weight="500">April</text>
+<rect x="238" y="215" width="453" height="10" rx="5" fill="#e3edee"/>
+<rect x="238" y="215" width="451.14" height="10" rx="5" fill="#197f71"/>
+<text x="707" y="224" fill="#183346" font-size="13" font-weight="700">R$ 973,534</text>
+<text x="24" y="258" fill="#183346" font-size="13" font-weight="500">May</text>
+<rect x="238" y="249" width="453" height="10" rx="5" fill="#e3edee"/>
+<rect x="238" y="249" width="453.00" height="10" rx="5" fill="#197f71"/>
+<text x="707" y="258" fill="#183346" font-size="13" font-weight="700">R$ 977,545</text>
+<text x="24" y="292" fill="#183346" font-size="13" font-weight="500">June</text>
+<rect x="238" y="283" width="453" height="10" rx="5" fill="#e3edee"/>
+<rect x="238" y="283" width="396.71" height="10" rx="5" fill="#197f71"/>
+<text x="707" y="292" fill="#183346" font-size="13" font-weight="700">R$ 856,078</text>
+<text x="24" y="321" fill="#4c6573" font-size="11" font-weight="500">Source: Olist Brazilian E-Commerce Public Dataset · CC BY-NC-SA 4.0</text>
+</svg>

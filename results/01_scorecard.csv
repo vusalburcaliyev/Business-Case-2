@@ -1,0 +1,4 @@
+period,placed_orders,sold_orders,sales_cents,items_sold,freight_cents,canceled_orders,unavailable_orders,delivered_orders,measured_deliveries,on_time_deliveries,aov_cents,items_per_order,cancellation_pct,on_time_pct
+2017-Q2,9349,8984,125193130,10062,19578287,63,64,8984,8983,8631,13935.12,1.12,0.67,96.08
+2018-Q1,21208,20627,270443838,23572,46021573,133,95,20627,20627,17970,13111.16,1.143,0.63,87.12
+2018-Q2,19979,19646,280715664,22647,46647510,57,25,19646,19643,18823,14288.69,1.153,0.29,95.83

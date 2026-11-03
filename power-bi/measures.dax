@@ -1,0 +1,43 @@
+Placed Orders = COUNTROWS(Orders)
+
+Delivered Orders With Items =
+CALCULATE([Placed Orders], Orders[sold] = 1)
+
+Merchandise Sales BRL =
+DIVIDE(CALCULATE(SUM(Orders[merchandise_cents]), Orders[sold] = 1), 100)
+
+Average Order Value BRL =
+DIVIDE([Merchandise Sales BRL], [Delivered Orders With Items])
+
+Items per Order =
+DIVIDE(CALCULATE(SUM(Orders[items]), Orders[sold] = 1), [Delivered Orders With Items])
+
+Cancelled Orders =
+CALCULATE([Placed Orders], Orders[status] = "canceled")
+
+Cancellation Rate =
+DIVIDE([Cancelled Orders], [Placed Orders])
+
+Measured Deliveries = COUNT(Orders[days_vs_promise])
+
+On-time Deliveries =
+CALCULATE([Placed Orders], FILTER(Orders,
+    NOT ISBLANK(Orders[days_vs_promise]) && Orders[days_vs_promise] <= 0
+))
+
+On-time Delivery Rate = DIVIDE([On-time Deliveries], [Measured Deliveries])
+
+Buyers =
+CALCULATE(DISTINCTCOUNTNOBLANK(Orders[buyer_id]), Orders[sold] = 1)
+
+Repeat Buyers =
+VAR ByBuyer =
+    ADDCOLUMNS(
+        FILTER(VALUES(Orders[buyer_id]), NOT ISBLANK(Orders[buyer_id])),
+        "BuyerOrders", CALCULATE([Delivered Orders With Items])
+    )
+RETURN COALESCE(COUNTROWS(FILTER(ByBuyer, [BuyerOrders] >= 2)), 0)
+
+Repeat Buyer Rate = DIVIDE([Repeat Buyers], [Buyers])
+
+Category Sales BRL = DIVIDE(SUM(DeliveredItems[price_cents]), 100)
