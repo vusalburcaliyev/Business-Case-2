@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "dbb4189cb6e8ea313c09",
+  "position": {
+    "x": 1004,
+    "y": 125,
+    "z": 6000,
+    "height": 108,
+    "width": 234,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Quarter KPIs"
+                    }
+                  },
+                  "Property": "Repeat buyer rate"
+                }
+              },
+              "queryRef": "Quarter KPIs.Repeat buyer rate",
+              "nativeQueryRef": "Repeat buyer rate"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

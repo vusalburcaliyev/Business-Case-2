@@ -4,7 +4,7 @@
 
 I wanted to know what was behind a stronger sales quarter at an online retailer. In Q2 2018, Olist sold **R$2.81 million** in delivered merchandise, up **3.80%** from Q1. But it delivered **981 fewer orders**. I looked at what shoppers spent, how much the largest orders mattered, and whether the retailer kept its delivery promises.
 
-[Dashboard file](Retail_Dashboard.html) · [SQL walkthrough](docs/SQL_WALKTHROUGH.md) · [Power BI guide and DAX](power-bi/BUILD_GUIDE.md)
+[Power BI report](power-bi/) · [SQL walkthrough](docs/SQL_WALKTHROUGH.md) · [Row-level rebuild guide](power-bi/BUILD_GUIDE.md)
 
 ## Background
 
@@ -25,7 +25,7 @@ I added up the items on each order before building the scorecard. Otherwise, a b
 
 - **SQL and SQLite:** I built separate order and item views and wrote eight queries.
 - **Python:** I loaded and checked five source tables.
-- **HTML, JavaScript and DAX:** I built dashboard views and wrote Power BI measures.
+- **Power BI and DAX:** I built two editable report pages and measures for the retail KPIs.
 
 ## Analysis
 
@@ -61,7 +61,7 @@ Watches and gifts gained **R$63,108** from Q1 and ranked first in Q2. Computer a
 
 ### How I showed it in the dashboard
 
-I built two views with a quarter selector. To run them, open the [dashboard file](Retail_Dashboard.html) on GitHub, download it, then open the HTML in your browser. It works offline.
+I built two views in [Power BI](power-bi/): sales and customers, and delivery and assortment. Choose one quarter to compare state delivery or repeat buying. The figures below are static previews built from the same SQL results.
 
 ![Sales and customers preview: Q2 merchandise sales, delivered orders, average order value, and monthly sales](assets/sales.svg)
 

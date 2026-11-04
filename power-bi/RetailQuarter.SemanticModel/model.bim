@@ -1,0 +1,386 @@
+{
+  "name": "RetailQuarter",
+  "compatibilityLevel": 1600,
+  "model": {
+    "name": "Model",
+    "culture": "en-US",
+    "sourceQueryCulture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "discourageImplicitMeasures": true,
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Quarter\", \"Quarter KPIs\", \"Categories\", \"States\", \"Month Trend\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Quarter",
+        "columns": [
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "sourceColumn": "Quarter",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [],
+        "partitions": [
+          {
+            "name": "Quarter",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Snapshot = Json.Document(Binary.Decompress(Binary.FromText(\"i45WMjIwNNcNNFKK1QGzLXQDDZHYQPFYAA==\", BinaryEncoding.Base64), Compression.Deflate)),",
+                "    Rows = Table.FromRows(Snapshot, type table [#\"Quarter\" = nullable text])",
+                "in",
+                "    Rows"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "Quarter KPIs",
+        "columns": [
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "sourceColumn": "Quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Placed",
+            "dataType": "int64",
+            "sourceColumn": "Placed",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Delivered",
+            "dataType": "int64",
+            "sourceColumn": "Delivered",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sales cents",
+            "dataType": "int64",
+            "sourceColumn": "Sales cents",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Items",
+            "dataType": "int64",
+            "sourceColumn": "Items",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Canceled",
+            "dataType": "int64",
+            "sourceColumn": "Canceled",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Measured",
+            "dataType": "int64",
+            "sourceColumn": "Measured",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "On time",
+            "dataType": "int64",
+            "sourceColumn": "On time",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Buyers",
+            "dataType": "int64",
+            "sourceColumn": "Buyers",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Repeat buyers",
+            "dataType": "int64",
+            "sourceColumn": "Repeat buyers",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Merchandise sales",
+            "expression": "DIVIDE(SUM('Quarter KPIs'[Sales cents]), 100)",
+            "formatString": "\"R$\" #,0.00;(\"R$\" #,0.00)"
+          },
+          {
+            "name": "Delivered orders",
+            "expression": "SUM('Quarter KPIs'[Delivered])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Average order value",
+            "expression": "DIVIDE([Merchandise sales], [Delivered orders])",
+            "formatString": "\"R$\" #,0.00;(\"R$\" #,0.00)"
+          },
+          {
+            "name": "Items per order",
+            "expression": "DIVIDE(SUM('Quarter KPIs'[Items]), [Delivered orders])",
+            "formatString": "0.00"
+          },
+          {
+            "name": "Cancellation rate",
+            "expression": "DIVIDE(SUM('Quarter KPIs'[Canceled]), SUM('Quarter KPIs'[Placed]))",
+            "formatString": "0.00%"
+          },
+          {
+            "name": "On-time delivery rate",
+            "expression": "DIVIDE(SUM('Quarter KPIs'[On time]), SUM('Quarter KPIs'[Measured]))",
+            "formatString": "0.00%"
+          },
+          {
+            "name": "Repeat buyer rate",
+            "expression": "IF(HASONEVALUE('Quarter'[Quarter]), DIVIDE(SUM('Quarter KPIs'[Repeat buyers]), SUM('Quarter KPIs'[Buyers])))",
+            "formatString": "0.00%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Quarter KPIs",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Snapshot = Json.Document(Binary.Decompress(Binary.FromText(\"RY3LDcRACEN7ydkrYcPwKSPnKP23sZNopb08ATb2dR0y1ufUgfEY9HSAWhynG2iWQvpz30gnusbB1o33tz8nD4iyhra5oLIIb9+7rxLo/lNYU7ZnkQizf8Ju50zNZkZCbcWVGZAyCqte4altbY4PoVj3/QU=\", BinaryEncoding.Base64), Compression.Deflate)),",
+                "    Rows = Table.FromRows(Snapshot, type table [#\"Quarter\" = nullable text, #\"Placed\" = nullable number, #\"Delivered\" = nullable number, #\"Sales cents\" = nullable number, #\"Items\" = nullable number, #\"Canceled\" = nullable number, #\"Measured\" = nullable number, #\"On time\" = nullable number, #\"Buyers\" = nullable number, #\"Repeat buyers\" = nullable number]),",
+                "    Typed = Table.TransformColumnTypes(Rows, {{\"Placed\", Int64.Type}, {\"Delivered\", Int64.Type}, {\"Sales cents\", Int64.Type}, {\"Items\", Int64.Type}, {\"Canceled\", Int64.Type}, {\"Measured\", Int64.Type}, {\"On time\", Int64.Type}, {\"Buyers\", Int64.Type}, {\"Repeat buyers\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "Categories",
+        "columns": [
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "sourceColumn": "Quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Category",
+            "dataType": "string",
+            "sourceColumn": "Category",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sales cents",
+            "dataType": "int64",
+            "sourceColumn": "Sales cents",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Category sales",
+            "expression": "DIVIDE(SUM('Categories'[Sales cents]), 100)",
+            "formatString": "\"R$\" #,0.00;(\"R$\" #,0.00)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Categories",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Snapshot = Json.Document(Binary.Decompress(Binary.FromText(\"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\", BinaryEncoding.Base64), Compression.Deflate)),",
+                "    Rows = Table.FromRows(Snapshot, type table [#\"Quarter\" = nullable text, #\"Category\" = nullable text, #\"Sales cents\" = nullable number]),",
+                "    Typed = Table.TransformColumnTypes(Rows, {{\"Sales cents\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "States",
+        "columns": [
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "sourceColumn": "Quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "sourceColumn": "State",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Measured",
+            "dataType": "int64",
+            "sourceColumn": "Measured",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Late",
+            "dataType": "int64",
+            "sourceColumn": "Late",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Late deliveries",
+            "expression": "IF(HASONEVALUE('Quarter'[Quarter]), SUM('States'[Late]))",
+            "formatString": "#,0"
+          },
+          {
+            "name": "State late rate",
+            "expression": "IF(HASONEVALUE('Quarter'[Quarter]), DIVIDE([Late deliveries], SUM('States'[Measured])))",
+            "formatString": "0.00%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "States",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Snapshot = Json.Document(Binary.Decompress(Binary.FromText(\"ZZTJTgNBDET/Zc6O1N56OZKwCKTAkOGG8v+/gd1iSGyur6er7arSfH8vVLAdPmmB5fiwAJcKJFe459vJuCpQifxpW4BQABN/+VgAh8BIMqvLUAGsGE/WJ7sgBWrEp4l7xpc3wzgKSEsyNj+WBhzx+cUx25xpoPWygHSFJHOxtVQJNOLHZ5OpDPvs/fCJv0OSCvQR+dmH0XEb8pf79KSDoZUeT+b4dpBvnDfnCJxecPuFGvT0/frq/jAQRe7x1oaAlIQ8347kEaRZt6nUbJEaTzxiYQTNO5gbzBaNpB2+bOtCt2rt3x89G7WZInezxTNIbnuWJMOEavb1faZ8K+P+wmWWQqFr2trq2LV10HZ38tejWiymyKeBijB65LMCVl/GyD0gHmodi3xWAwcgp3fdPFvhPh/aC8AVksxskpuNRdIFd4mEQyn3DgubSS1yj5Ob8STk5g3bgPLTm/NhKUTuTaqt/tOfXvfmv5B04sXA3kGu1x8=\", BinaryEncoding.Base64), Compression.Deflate)),",
+                "    Rows = Table.FromRows(Snapshot, type table [#\"Quarter\" = nullable text, #\"State\" = nullable text, #\"Measured\" = nullable number, #\"Late\" = nullable number]),",
+                "    Typed = Table.TransformColumnTypes(Rows, {{\"Measured\", Int64.Type}, {\"Late\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "Month Trend",
+        "columns": [
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "sourceColumn": "Quarter",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Purchase month",
+            "dataType": "string",
+            "sourceColumn": "Purchase month",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Sales cents",
+            "dataType": "int64",
+            "sourceColumn": "Sales cents",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Monthly sales",
+            "expression": "DIVIDE(SUM('Month Trend'[Sales cents]), 100)",
+            "formatString": "\"R$\" #,0.00;(\"R$\" #,0.00)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Month Trend",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Snapshot = Json.Document(Binary.Decompress(Binary.FromText(\"bc67DcQwDAPQXVzbgCzqO0bqwPuvEd0lSBN3BB4k8jwb0/RxcOt3ImkdQmZpsfqXtXWJBIJ1x1bMMxnwh2Mc8+YYVClZTJRox/Un2AQ+sWPUtQJqb3e83fFfng6t9blj/bGriG25locauYetdQE=\", BinaryEncoding.Base64), Compression.Deflate)),",
+                "    Rows = Table.FromRows(Snapshot, type table [#\"Quarter\" = nullable text, #\"Purchase month\" = nullable text, #\"Sales cents\" = nullable number]),",
+                "    Typed = Table.TransformColumnTypes(Rows, {{\"Sales cents\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "5f201130-f9bb-5988-a434-eead3d25c814",
+        "fromTable": "Quarter KPIs",
+        "fromColumn": "Quarter",
+        "toTable": "Quarter",
+        "toColumn": "Quarter"
+      },
+      {
+        "name": "36449924-7054-54c2-bd2f-fea06bce3661",
+        "fromTable": "Categories",
+        "fromColumn": "Quarter",
+        "toTable": "Quarter",
+        "toColumn": "Quarter"
+      },
+      {
+        "name": "19bf9f05-fda6-5254-a4d7-706082e556c3",
+        "fromTable": "States",
+        "fromColumn": "Quarter",
+        "toTable": "Quarter",
+        "toColumn": "Quarter"
+      },
+      {
+        "name": "53f5f302-de0a-5170-85b9-b440e1c841ba",
+        "fromTable": "Month Trend",
+        "fromColumn": "Quarter",
+        "toTable": "Quarter",
+        "toColumn": "Quarter"
+      }
+    ]
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "c58e4f825ae51409d09c",
+  "position": {
+    "x": 28,
+    "y": 248,
+    "z": 7000,
+    "height": 363,
+    "width": 602,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Month Trend"
+                    }
+                  },
+                  "Property": "Purchase month"
+                }
+              },
+              "queryRef": "Month Trend.Purchase month",
+              "nativeQueryRef": "Purchase month"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Month Trend"
+                    }
+                  },
+                  "Property": "Monthly sales"
+                }
+              },
+              "queryRef": "Month Trend.Monthly sales",
+              "nativeQueryRef": "Monthly sales"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Month Trend"
+                  }
+                },
+                "Property": "Purchase month"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Sales by purchase month'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
