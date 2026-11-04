@@ -1,16 +1,35 @@
 # Retail Quarter Review: Sales rose. Did demand?
 
+## Introduction
+
 I wanted to know what was behind a stronger sales quarter at an online retailer. In Q2 2018, Olist sold **R$2.81 million** in delivered merchandise, up **3.80%** from Q1. But it delivered **981 fewer orders**. I looked at what shoppers spent, how much the largest orders mattered, and whether the retailer kept its delivery promises.
 
 [Dashboard file](Retail_Dashboard.html) · [SQL walkthrough](docs/SQL_WALKTHROUGH.md) · [Power BI guide and DAX](power-bi/BUILD_GUIDE.md)
 
-## I started with the order, not the item
+## Background
+
+### I started with the order, not the item
 
 I used five tables from the [Olist Brazilian E-Commerce Public Dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce): orders, customers, items, products, and category translations. The source contains **99,441 orders** and **112,650 item rows**. I compared orders purchased in **Q2 2018** with **Q1 2018** and used **Q2 2017** as a same-quarter benchmark.
 
 I added up the items on each order before building the scorecard. Otherwise, a basket with five items would count as five orders. I kept a separate item view for category analysis. I also checked for duplicate keys, kept orders without items in the placed-order count, and set aside delivery records with missing or inconsistent dates only when calculating on-time delivery. The [audit](results/audit.json) records the exceptions.
 
-## What I measured
+### The Questions Answered:
+
+1. Why did sales rise even though fewer orders were delivered?
+2. Did sales still grow without the largest baskets?
+3. How did delivery performance change, and where would I investigate?
+4. Which categories contributed most to the change in sales?
+
+## Tools
+
+- **SQL and SQLite:** I built separate order and item views and wrote eight queries.
+- **Python:** I loaded and checked five source tables.
+- **HTML, JavaScript and DAX:** I built dashboard views and wrote Power BI measures.
+
+## Analysis
+
+### What I measured
 
 | KPI | Q1 2018 | Q2 2018 | How I counted it |
 |---|---:|---:|---|
@@ -22,17 +41,25 @@ I added up the items on each order before building the scorecard. Otherwise, a b
 | Cancellation rate | 0.63% | **0.29%** | Canceled orders ÷ all placed orders |
 | Repeat buyer rate | 1.98% | **1.26%** | Buyers who placed at least two eligible orders ÷ buyers with at least one in the quarter |
 
-## Findings
+### Findings
 
-**Higher order values made up for fewer orders.** I broke the R$102,718 increase into two parts. At Q1's average order value, delivering 981 fewer orders would have cost about **R$128,620** in sales. The higher Q2 average order value added about **R$231,339**, more than making up for the volume drop. Sales were also **124.23% higher** than in Q2 2017, when Olist delivered far fewer orders. That longer comparison answers a different question from the change since Q1.
+#### 1. Higher order values made up for fewer orders
 
-**The increase depended on large baskets.** I calculated one cutoff for both quarters: **R$987**, the 99th percentile of pooled delivered order values. There were **231** orders above it in Q2 versus **162** in Q1. When I removed those orders from both quarters, merchandise sales **fell 1.54%** from Q1 to Q2. I kept them in the main scorecard because a large order can still be a real sale. The second calculation shows how sensitive the conclusion is to those orders.
+I broke the R$102,718 increase into two parts. At Q1's average order value, delivering 981 fewer orders would have cost about **R$128,620** in sales. The higher Q2 average order value added about **R$231,339**, more than making up for the volume drop. Sales were also **124.23% higher** than in Q2 2017, when Olist delivered far fewer orders. That longer comparison answers a different question from the change since Q1.
 
-**Delivery improved overall, but priorities depend on what I count.** The on-time rate improved by **8.71 percentage points**, from 87.12% to 95.83%. Among states with at least 100 measured deliveries, **Pará (PA)** had the highest late rate: **15.63%**, or 25 late deliveries out of 160. **São Paulo (SP)** had the most late deliveries: **207**. I would investigate Pará if the goal were to reduce the risk of a late order, and São Paulo if the goal were to reach more affected customers.
+#### 2. The increase depended on large baskets
 
-**The sales mix shifted.** Watches and gifts gained **R$63,108** from Q1 and ranked first in Q2. Computer accessories lost **R$115,535**, the largest category decline. I would look at item prices and order mix in both categories before changing the assortment.
+I calculated one cutoff for both quarters: **R$987**, the 99th percentile of pooled delivered order values. There were **231** orders above it in Q2 versus **162** in Q1. When I removed those orders from both quarters, merchandise sales **fell 1.54%** from Q1 to Q2. I kept them in the main scorecard because a large order can still be a real sale. The second calculation shows how sensitive the conclusion is to those orders.
 
-## How I showed it in the dashboard
+#### 3. Delivery improved, but priorities depended on what I counted
+
+The on-time rate improved by **8.71 percentage points**, from 87.12% to 95.83%. Among states with at least 100 measured deliveries, **Pará (PA)** had the highest late rate: **15.63%**, or 25 late deliveries out of 160. **São Paulo (SP)** had the most late deliveries: **207**. I would investigate Pará if the goal were to reduce the risk of a late order, and São Paulo if the goal were to reach more affected customers.
+
+#### 4. The sales mix shifted
+
+Watches and gifts gained **R$63,108** from Q1 and ranked first in Q2. Computer accessories lost **R$115,535**, the largest category decline. I would look at item prices and order mix in both categories before changing the assortment.
+
+### How I showed it in the dashboard
 
 I built two views with a quarter selector. To run them, open the [dashboard file](Retail_Dashboard.html) on GitHub, download it, then open the HTML in your browser. It works offline.
 
@@ -44,7 +71,7 @@ I built two views with a quarter selector. To run them, open the [dashboard file
 
 **What I found in the delivery view:** A state can have a high late rate without producing the most late deliveries. I show both numbers so the choice of where to investigate is visible.
 
-## Why I wrote the SQL this way
+### Why I wrote the SQL this way
 
 **I ranked categories after adding up their sales.** I used a CTE to make one row per category and quarter, then applied `DENSE_RANK`. If two categories tie for second, the next is still third.
 
@@ -74,7 +101,7 @@ The [SQL walkthrough](docs/SQL_WALKTHROUGH.md) explains all eight queries, inclu
 
 In the [Power BI build guide](power-bi/BUILD_GUIDE.md), I use `DIVIDE([Merchandise Sales BRL], [Delivered Orders With Items])` for AOV. That way, both values respond to the same quarter or state filter. Averaging the AOVs of different states would give a small state as much weight as a large one.
 
-## What I would look at next
+### What I would look at next
 
 I would start by splitting high-value orders by category and buyer to see whether the Q2 increase came from a broad shift or a few unusually large purchases. For delivery, I would look at the largest sources of late orders and then compare seller, carrier, and route data if available.
 
