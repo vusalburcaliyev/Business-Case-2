@@ -1,4 +1,4 @@
-"""Rebuild the SQLite model, published results, and offline report from the Olist zip."""
+"""Rebuild the SQLite model, SQL results, and figures from the Olist ZIP."""
 import argparse
 from collections import Counter
 import csv
@@ -15,7 +15,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SQL = ROOT / "sql"
 RESULTS = ROOT / "results"
 DATA = ROOT / "data"
-DASHBOARD = ROOT / "dashboard"
 
 
 def cents(value):
@@ -160,16 +159,9 @@ def main():
             db.close()
         db_path.replace(DATA / "olist.sqlite")
     (RESULTS / "audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    template = DASHBOARD / "template.html"
-    if template.exists():
-        from previews import make
+    from previews import make
 
-        payload = json.dumps(result, ensure_ascii=True, separators=(",", ":")).replace("<", "\\u003c")
-        (ROOT / "Retail_Dashboard.html").write_text(
-            template.read_text(encoding="utf-8").replace("/* @RESULTS */", payload),
-            encoding="utf-8",
-        )
-        make(ROOT, result)
+    make(ROOT, result)
     print(f"Built {len(result)} SQL outputs from {audit['loaded_orders']:,} orders and {audit['loaded_order_items']:,} items.")
 
 

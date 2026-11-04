@@ -4,7 +4,7 @@
 
 I wanted to know what was behind a stronger sales quarter at an online retailer. In Q2 2018, Olist sold **R$2.81 million** in delivered merchandise, up **3.80%** from Q1. But it delivered **981 fewer orders**. I looked at what shoppers spent, how much the largest orders mattered, and whether the retailer kept its delivery promises.
 
-[Power BI report](power-bi/) · [SQL walkthrough](docs/SQL_WALKTHROUGH.md) · [Row-level rebuild guide](power-bi/BUILD_GUIDE.md)
+[Power BI report](power-bi/) · [SQL walkthrough](docs/SQL_WALKTHROUGH.md)
 
 ## Background
 
@@ -61,7 +61,7 @@ Watches and gifts gained **R$63,108** from Q1 and ranked first in Q2. Computer a
 
 ### How I showed it in the dashboard
 
-I built two views in [Power BI](power-bi/): sales and customers, and delivery and assortment. Choose one quarter to compare state delivery or repeat buying. The figures below are static previews built from the same SQL results.
+I built two views in [Power BI](power-bi/): sales and customers, and delivery and assortment. Download and extract the repository ZIP, open `power-bi/RetailQuarter.pbip` in Power BI Desktop, and select **Refresh**. Choose one quarter to compare state delivery or repeat buying. The figures below are static previews built from the same SQL results.
 
 ![Sales and customers preview: Q2 merchandise sales, delivered orders, average order value, and monthly sales](assets/sales.svg)
 
@@ -99,7 +99,7 @@ FROM monthly;
 
 The [SQL walkthrough](docs/SQL_WALKTHROUGH.md) explains all eight queries, including why I used `RANK` for the state comparison and `ROW_NUMBER` for the high-order cutoff. The [query results](results/) show the underlying counts and totals.
 
-In the [Power BI build guide](power-bi/BUILD_GUIDE.md), I use `DIVIDE([Merchandise Sales BRL], [Delivered Orders With Items])` for AOV. That way, both values respond to the same quarter or state filter. Averaging the AOVs of different states would give a small state as much weight as a large one.
+In Power BI, I use `DIVIDE([Merchandise sales], [Delivered orders])` for AOV. That way, both values respond to the same quarter filter. Averaging quarterly AOVs would give a quarter with fewer orders the same weight as one with more orders.
 
 ### What I would look at next
 
@@ -109,4 +109,6 @@ I would use the repeat buyer rate as a prompt for a cohort analysis. This report
 
 The dataset does not show returns, refunds, or costs. I report delivered merchandise value and keep freight separate. I cannot use these numbers to calculate net revenue or profit.
 
-[Rebuild and source attribution](docs/SOURCE.md) · [KPI definitions and data checks](docs/METRICS.md)
+To rebuild the SQL results, download the ZIP from [the data source](docs/SOURCE.md) and run `python scripts/build.py path/to/brazilian-ecommerce.zip` (Python 3.11+). The build checks that orders, items, and sales totals reconcile.
+
+[KPI definitions and data checks](docs/METRICS.md)
